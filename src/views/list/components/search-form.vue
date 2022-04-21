@@ -47,19 +47,20 @@ const schema = {
       'x-component-props': {
         style: 'width: 240px;',
         placeholder: '请输入'
-      }
+      },
+      'x-display': 'none'
     }
   }
 }
 
-// 设置组件类型枚举值
+// 设置省枚举值
 const useProvinceDataSource = () => {
   return field => {
     field.dataSource = areaData.map(({ label, value }) => ({ label, value }))
   }
 }
 
-// 设置元件类型枚举值
+// 设置市枚举值
 const useCityDataSource = () => {
   return field => {
     const componentType = field.query('province').get('value')
@@ -80,6 +81,7 @@ const form = createForm({
     })
     onFieldReact('addressDetails', field => {
       const city = field.query('city').value()
+      // 当选择的城市是 南京 时，显示详细地址输入框
       field.display = city === 21 ? 'visible' : 'none'
     })
   }
