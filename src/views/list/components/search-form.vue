@@ -1,7 +1,7 @@
 <template>
   <div>
     <Form :form="form">
-      <SchemaField :schema="schema" :scope="{ useComponentTypeDataSource, useCellTypeDataSource }" />
+      <SchemaField :schema="schema" :scope="{ useProvinceDataSource, useCityDataSource }" />
       <Submit @submit="onSubmit">提交</Submit>
       <Reset @click="onReset">重置</Reset>
     </Form>
@@ -26,7 +26,7 @@ const schema = {
         style: 'width: 240px;',
         clearable: true
       },
-      'x-reactions': ['{{useComponentTypeDataSource()}}']
+      'x-reactions': ['{{useProvinceDataSource()}}']
     },
     city: {
       type: 'number',
@@ -37,7 +37,7 @@ const schema = {
         style: 'width: 240px;',
         clearable: true
       },
-      'x-reactions': ['{{useCellTypeDataSource()}}']
+      'x-reactions': ['{{useCityDataSource()}}']
     },
     addressDetails: {
       type: 'number',
@@ -53,14 +53,14 @@ const schema = {
 }
 
 // 设置组件类型枚举值
-const useComponentTypeDataSource = () => {
+const useProvinceDataSource = () => {
   return field => {
     field.dataSource = areaData.map(({ label, value }) => ({ label, value }))
   }
 }
 
 // 设置元件类型枚举值
-const useCellTypeDataSource = () => {
+const useCityDataSource = () => {
   return field => {
     const componentType = field.query('province').get('value')
     if (!componentType) return []
@@ -102,8 +102,8 @@ export default {
     }
   },
   methods: {
-    useComponentTypeDataSource,
-    useCellTypeDataSource,
+    useProvinceDataSource,
+    useCityDataSource,
     onSubmit(value) {
       console.log(value)
     },
