@@ -2,7 +2,6 @@
   <Form :form="form">
     <SchemaField :schema="schema" :scope="{ useAsyncDataSource, loadData }" />
     <Submit @submit="onSubmit">提交</Submit>
-    <Reset @click="onReset">重置</Reset>
   </Form>
 </template>
 
@@ -10,14 +9,14 @@
 import { createForm } from '@formily/core'
 import { createSchemaField } from '@formily/vue'
 import { action } from '@formily/reactive'
-import { Form, FormItem, Select, Submit, Reset } from '@formily/element'
+import { Form, FormItem, Select, Submit } from '@formily/element'
 
 const schema = {
   type: 'object',
   properties: {
     linkage: {
       type: 'string',
-      title: '组件类型',
+      title: '联动选择框',
       enum: [
         {
           label: '发请求1',
@@ -36,7 +35,7 @@ const schema = {
     },
     select: {
       type: 'string',
-      title: '元件类型',
+      title: '异步选择框',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
@@ -58,7 +57,6 @@ const useAsyncDataSource = service => field => {
 }
 
 const loadData = async field => {
-  console.log(field.query('linkage'))
   const linkage = field.query('linkage').get('value')
   if (!linkage) return []
   return new Promise(resolve => {
@@ -99,7 +97,7 @@ const { SchemaField } = createSchemaField({
 })
 
 export default {
-  components: { Form, SchemaField, Submit, Reset },
+  components: { Form, SchemaField, Submit },
   data() {
     return {
       form,
@@ -111,9 +109,6 @@ export default {
     loadData,
     onSubmit(value) {
       console.log(value)
-    },
-    onReset() {
-      console.log('onReset')
     }
   }
 }
